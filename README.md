@@ -404,3 +404,61 @@ Número de MSS = 625,000 ÷ 1,500 ≈ 416.67
 ### Interpretación
 
 Para aprovechar completamente el enlace de 100 Mbps con un RTT de 50 ms, el tamaño de ventana TCP debería ser de **625,000 bytes**, permitiendo que unos **417 segmentos MSS** estén en tránsito al mismo tiempo.
+
+## Pregunta 10: Control de Congestión en TCP
+
+TCP utiliza varios mecanismos para evitar la congestión en la red y garantizar un rendimiento eficiente. A continuación, se describen tres algoritmos clave:
+
+---
+
+### 1. Algoritmo de Arranque Lento (Slow Start)
+
+**Objetivo:**  
+Evitar sobrecargar la red al inicio de una conexión.
+
+**Funcionamiento:**  
+- Comienza enviando solo 1 segmento (MSS).
+- Cada vez que se recibe una confirmación (ACK), la ventana de congestión (`cwnd`) se **duplica**, creciendo exponencialmente.
+- Este crecimiento continúa hasta alcanzar un umbral llamado **ssthresh**.
+- Una vez alcanzado, cambia a crecimiento lineal (conocido como *congestion avoidance*).
+
+**Contribución al rendimiento:**  
+Evita inyectar muchos datos de golpe en la red, reduciendo el riesgo de congestión inicial.
+
+---
+
+### 2. Algoritmo de Nagle
+
+**Objetivo:**  
+Reducir el número de pequeños paquetes enviados, especialmente en aplicaciones que generan muchos mensajes cortos.
+
+**Funcionamiento:**  
+- TCP agrupa pequeños segmentos y los retiene si hay datos sin confirmar.
+- Solo se envía un paquete si no hay datos pendientes o si se ha recibido una confirmación.
+
+**Contribución al rendimiento:**  
+Mejora la eficiencia del uso del ancho de banda al reducir el tráfico innecesario de paquetes pequeños (minimiza la sobrecarga).
+
+---
+
+### 3. Algoritmo de Clark
+
+**Objetivo:**  
+Evitar el envío de muchos pequeños paquetes debido a una ventana de recepción parcialmente abierta.
+
+**Funcionamiento:**  
+- El receptor **no anuncia pequeñas aperturas** de su ventana (por ejemplo, 1 o 2 bytes).
+- Espera hasta tener suficiente espacio antes de notificar al emisor.
+
+**Contribución al rendimiento:**  
+Reduce la fragmentación y previene el envío de datos ineficientes, mejorando el uso del canal y evitando congestión innecesaria.
+
+---
+
+### Resumen
+
+| Algoritmo     | Objetivo principal                  | Beneficio para la red                         |
+|---------------|-------------------------------------|------------------------------------------------|
+| Slow Start    | Evitar congestión inicial           | Controla el crecimiento del tráfico al inicio |
+| Nagle         | Reducir tráfico de paquetes pequeños| Optimiza uso del ancho de banda               |
+| Clark         | Evitar envíos ineficientes          | Mejora rendimiento y reduce fragmentación     |
