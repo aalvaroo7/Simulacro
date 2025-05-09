@@ -17,18 +17,52 @@
   <main class="markdown-body">
     <div id="contenido">Cargando contenido...</div>
   </main>
+  
+  <nav>
+    <button onclick="mostrarParte('parte1')">Parte I: Capa de Red</button>
+    <button onclick="mostrarParte('parte2')">Parte II: Capa de Transporte</button>
+    <button onclick="mostrarParte('parte3')">Parte III: Capa de Aplicación</button>
+    <button onclick="mostrarParte('parte4')">Parte IV: Seguridad</button>
+  </nav>
+
+  <main class="markdown-body">
+    <div id="parte1" class="section"></div>
+    <div id="parte2" class="section"></div>
+    <div id="parte3" class="section"></div>
+    <div id="parte4" class="section"></div>
+  </main>
 
   <footer>
     <p>&copy; 2025 - Simulacro de Redes</p>
   </footer>
 
-  <script>
+ <script>
+    function mostrarParte(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
     fetch("README.md")
       .then(res => res.text())
       .then(markdown => {
-        const html = marked.parse(markdown);
-        document.getElementById("contenido").innerHTML = html;
+        const secciones = dividirSecciones(markdown);
+        document.getElementById("parte1").innerHTML = marked.parse(secciones.parte1);
+        document.getElementById("parte2").innerHTML = marked.parse(secciones.parte2);
+        document.getElementById("parte3").innerHTML = marked.parse(secciones.parte3);
+        document.getElementById("parte4").innerHTML = marked.parse(secciones.parte4);
+        mostrarParte('parte1');
       });
+
+    function dividirSecciones(markdown) {
+      const partes = markdown.split(/(?=## Parte [IVX]+: )/g);
+      const contenido = {
+        parte1: partes.find(p => p.includes("## Parte I")) || "",
+        parte2: partes.find(p => p.includes("## Parte II")) || "",
+        parte3: partes.find(p => p.includes("## Parte III")) || "",
+        parte4: partes.find(p => p.includes("## Parte IV")) || "",
+      };
+      return contenido;
+    }
   </script>
 </body>
 </html>
