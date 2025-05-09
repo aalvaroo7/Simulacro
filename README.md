@@ -4,7 +4,7 @@ https://github.com/aalvaroo7/Simulacro.git
 
 # Ejercicio 1
 
-## a) Algoritmo de Dijkstra
+### a) Algoritmo de Dijkstra
 
 Dijkstra encuentra la ruta más corta desde un nodo origen hacia todos los demás en un **grafo ponderado** sin pesos negativos.
 
@@ -38,7 +38,7 @@ Dijkstra encuentra la ruta más corta desde un nodo origen hacia todos los demá
 
 Ruta más corta de A a B: **A → C → B** con costo **1 + 3 = 4**.
 
-## b) Enrutamiento por Inundación (Flooding)
+### b) Enrutamiento por Inundación (Flooding)
 
 El enrutamiento por inundación consiste en que cada nodo envía el paquete recibido a todos sus vecinos, excepto al que se lo envió. Este proceso continúa hasta que el paquete llega a su destino o se descarta.
 
@@ -65,4 +65,43 @@ El enrutamiento por inundación consiste en que cada nodo envía el paquete reci
 - Uso excesivo de ancho de banda.  
 - Duplicación de paquetes.  
 - Riesgo de tormentas de red si no se controla con TTL o historial.
+
+# Ejercicio 2
+
+### a) Para la subred 172.29.152.0 con máscara 255.255.248.0, determina la dirección de broadcast.
+
+#### Paso 1: Convertir la máscara a binario
+- Máscara: `255.255.248.0`
+- En binario:  
+  `11111111.11111111.11111000.00000000` → **/21** (21 bits de red)
+
+#### Paso 2: Identificar el rango de la subred
+- Subred base: `172.29.152.0`
+- Bloque de salto:  
+  La subred cambia cada `2^(32 - 21) = 2048` direcciones.
+
+- La subred `172.29.152.0/21` abarca desde:
+  - Primera IP: `172.29.152.0`
+  - Última IP del bloque:  
+    `172.29.159.255` (porque 152 + 7 = 159 en el tercer octeto)
+
+####  Dirección de Broadcast:
+- **172.29.159.255**
+
+---
+
+### b) Dado el bloque 172.18.26.0/23, calcula la dirección de broadcast y justifica el proceso.
+
+#### Paso 1: Interpretar el prefijo `/23`
+- `/23` equivale a máscara `255.255.254.0`
+- 23 bits de red, 9 bits para hosts → `2^9 = 512` direcciones
+
+#### Paso 2: Determinar el rango del bloque
+- Bloque: `172.18.26.0/23`
+- Cubre desde:
+  - Primera IP: `172.18.26.0`
+  - Última IP del bloque: `172.18.27.255`
+
+####  Dirección de Broadcast:
+- **172.18.27.255**
 
