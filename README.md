@@ -462,3 +462,267 @@ Reduce la fragmentación y previene el envío de datos ineficientes, mejorando e
 | Slow Start    | Evitar congestión inicial           | Controla el crecimiento del tráfico al inicio |
 | Nagle         | Reducir tráfico de paquetes pequeños| Optimiza uso del ancho de banda               |
 | Clark         | Evitar envíos ineficientes          | Mejora rendimiento y reduce fragmentación     |
+
+# Parte III: Capa de Aplicación y Aplicaciones Multimedia
+
+## Pregunta 11: Funcionamiento de DNS
+
+### ¿Qué es DNS?
+
+El **Sistema de Nombres de Dominio (DNS)** traduce nombres de dominio legibles por humanos (como `www.ejemplo.com`) en direcciones IP necesarias para localizar servidores en la red.
+
+---
+
+### Proceso de Resolución de Nombres
+
+1. **El usuario ingresa un dominio en el navegador**
+   - Ejemplo: `www.ejemplo.com`
+
+2. **Consulta a la caché local del sistema operativo**
+   - Se verifica si la IP ya está almacenada en la caché DNS local.
+
+3. **Consulta al servidor DNS configurado (generalmente del proveedor de Internet)**
+   - Si no está en caché, el sistema envía una **consulta recursiva** al DNS local.
+
+4. **El servidor DNS local consulta a un servidor raíz**
+   - Si tampoco tiene la respuesta, pregunta a un **servidor raíz DNS**, que responde con la dirección del **servidor TLD** correspondiente (`.com`, `.org`, etc.).
+
+5. **Consulta al servidor TLD**
+   - El TLD devuelve la dirección del **servidor autoritativo** para el dominio.
+
+6. **Consulta al servidor autoritativo**
+   - Este servidor proporciona la dirección IP exacta asociada al nombre de dominio solicitado.
+
+7. **Respuesta al navegador**
+   - El DNS local guarda la respuesta en caché y envía la IP al navegador.
+
+8. **El navegador establece la conexión con la IP obtenida**
+   - Se inicia una conexión HTTP/HTTPS con el servidor usando la dirección IP.
+
+---
+
+### Ejemplo simplificado
+
+Usuario → DNS local → Servidor raíz → Servidor TLD (.com) → Servidor autoritativo → IP del dominio
+
+
+---
+
+### Importancia
+
+- **Velocidad**: gracias a la caché, muchas resoluciones se hacen rápidamente.
+- **Escalabilidad**: el sistema jerárquico distribuye la carga.
+- **Fiabilidad**: si un servidor falla, se pueden usar réplicas o alternativas.
+
+
+
+## Pregunta 12: Protocolos de Correo Electrónico
+
+Los protocolos POP3, IMAP y SMTP son esenciales para el envío y recepción de correos electrónicos. A continuación se presentan sus diferencias clave:
+
+---
+
+### Comparación de Protocolos
+
+| Protocolo | Función Principal                | Tipo de Uso y Acceso                            | Modo de Almacenamiento de Correos                    |
+|-----------|----------------------------------|--------------------------------------------------|------------------------------------------------------|
+| **POP3**  | Descargar correos del servidor   | Acceso desde un solo dispositivo                | Correos se descargan y eliminan del servidor         |
+| **IMAP**  | Sincronizar correos con el servidor | Acceso desde múltiples dispositivos             | Correos permanecen en el servidor                    |
+| **SMTP**  | Envío de correos electrónicos    | Utilizado para enviar mensajes a otros servidores | No almacena correos; solo se encarga del envío       |
+
+---
+
+### Ejemplos de uso adecuados
+
+- **POP3**  
+  - Ideal cuando se desea guardar los correos localmente y liberar espacio del servidor.
+  - Ejemplo: usuarios con almacenamiento limitado en la nube y que solo usan un único dispositivo.
+
+- **IMAP**  
+  - Recomendado para usuarios que acceden al correo desde diferentes ubicaciones o dispositivos.
+  - Ejemplo: usuarios que usan su cuenta en un teléfono, computadora y webmail.
+
+- **SMTP**  
+  - Utilizado por todos los clientes de correo para enviar mensajes.
+  - Ejemplo: cuando Outlook o Gmail envía un correo, usa SMTP para entregarlo al servidor de destino.
+
+---
+
+### Resumen
+
+- **POP3**: descarga y elimina → local y único acceso.
+- **IMAP**: sincroniza → multiacceso y basado en servidor.
+- **SMTP**: envía → solo para el envío de mensajes.
+
+## Pregunta 13: Funcionamiento de HTTP y FTP
+
+---
+
+### a) Funcionamiento de HTTP (HyperText Transfer Protocol)
+
+**HTTP** es un protocolo de nivel de aplicación que permite la transferencia de recursos (páginas web, imágenes, etc.) entre un cliente (navegador) y un servidor web, generalmente sobre el puerto **80** (o **443** con HTTPS).
+
+#### Métodos más utilizados:
+
+| Método  | Descripción                                                |
+|---------|------------------------------------------------------------|
+| **GET**     | Solicita un recurso del servidor (solo lectura)             |
+| **POST**    | Envía datos al servidor, común en formularios               |
+| **PUT**     | Actualiza o reemplaza un recurso existente en el servidor  |
+| **DELETE**  | Elimina un recurso del servidor                            |
+
+**Funcionamiento básico:**
+
+1. El cliente (navegador) abre una conexión TCP al servidor.
+2. Envía una solicitud HTTP (por ejemplo, `GET /index.html`).
+3. El servidor responde con el contenido solicitado (por ejemplo, una página HTML).
+4. Se cierra o reutiliza la conexión (según la versión del protocolo).
+
+---
+
+### b) Funcionamiento de FTP (File Transfer Protocol)
+
+**FTP** permite transferir archivos entre un cliente y un servidor, generalmente usando los puertos **21** (control) y **20** (datos).
+
+#### Características clave:
+
+- Requiere autenticación (usuario y contraseña).
+- Usa **dos conexiones separadas**:
+  - **Conexión de control (puerto 21):** para comandos y respuestas.
+  - **Conexión de datos (puerto 20):** para la transferencia real de archivos.
+
+**Funcionamiento básico:**
+
+1. El cliente establece la conexión de control.
+2. Envía comandos como `LIST`, `GET`, `PUT`.
+3. Se abre una conexión de datos para cada archivo transferido.
+4. Se transfieren los datos y se cierra la conexión de datos (la de control permanece abierta).
+
+---
+
+### Diferencias principales entre HTTP y FTP
+
+| Característica     | HTTP                               | FTP                                          |
+|--------------------|------------------------------------|----------------------------------------------|
+| Uso principal      | Transferencia de contenido web     | Transferencia de archivos                    |
+| Conexión           | Una única conexión                 | Dos conexiones (control y datos)             |
+| Autenticación      | Opcional o mediante cookies/token  | Requiere usuario y contraseña (generalmente) |
+| Facilidad de uso   | Más simple y soportado por navegadores | Requiere cliente FTP o configuración especial |
+
+## Pregunta 14: Streaming y VoIP
+
+---
+
+### a) Tipos de Streaming
+
+| Tipo                     | Descripción breve                                                                 | Ejemplo de aplicación          |
+|--------------------------|------------------------------------------------------------------------------------|-------------------------------|
+| **UDP Streaming**        | Transmisión en tiempo real con el protocolo UDP. No hay garantía de entrega ni retransmisión. Es rápido pero menos fiable. | Transmisiones en vivo (ej. IPTV) |
+| **HTTP Streaming**       | Los datos se transmiten mediante HTTP. El contenido se descarga progresivamente como una secuencia de archivos. | YouTube en calidad fija        |
+| **DASH (Adaptive HTTP Streaming)** | Divide el contenido en pequeños segmentos y ajusta dinámicamente la calidad según el ancho de banda disponible. | Netflix, YouTube (adaptativo) |
+
+---
+
+### b) Funcionamiento de VoIP (Voz sobre IP)
+
+**VoIP (Voice over IP)** permite la transmisión de voz mediante redes IP, convirtiendo la voz analógica en paquetes digitales.
+
+#### Proceso básico:
+
+1. **Captura de voz** mediante micrófono.
+2. **Codificación y compresión** de la señal de voz (usando códecs como G.711, G.729).
+3. **Segmentación en paquetes IP**, normalmente transportados sobre **UDP**.
+4. **Transmisión de los paquetes** a través de la red IP.
+5. **Recepción y reensamblaje** de los paquetes en el destino.
+6. **Decodificación y reproducción** de la voz en el altavoz del receptor.
+
+#### Problemas comunes y soluciones:
+
+| Problema        | Descripción                                | Solución                                   |
+|-----------------|---------------------------------------------|--------------------------------------------|
+| **Retardo**     | Tiempos de transmisión elevados             | QoS, uso de redes optimizadas para VoIP    |
+| **Pérdida de paquetes** | Paquetes de voz que no llegan al destino       | Uso de códecs tolerantes, jitter buffer     |
+| **Eco**         | Se escucha la propia voz con retraso        | Canceladores de eco, auriculares           |
+| **Jitter**      | Variación en el tiempo de llegada de paquetes | Uso de jitter buffers                      |
+
+---
+
+### Resumen
+
+- **UDP Streaming**: rápido pero sin garantía.
+- **HTTP Streaming**: confiable, basado en descarga progresiva.
+- **DASH**: se adapta a la calidad de conexión.
+- **VoIP**: convierte la voz en paquetes IP, afectada por retardo y pérdida, pero puede mejorarse con QoS y códecs adecuados.
+
+## Pregunta 15: Control de Congestión en Redes Multimedia
+
+Las aplicaciones multimedia (como video en streaming o VoIP) requieren mecanismos especiales para mantener la calidad del servicio (QoS) y evitar la congestión en la red.
+
+---
+
+### 1. **Buffering en el cliente**
+
+**Descripción:**  
+Consiste en almacenar una parte del contenido multimedia antes de comenzar su reproducción. Esto permite absorber variaciones en la velocidad de la red (jitter) y pequeñas interrupciones.
+
+**Cómo mejora la QoS:**
+- Reduce cortes y pausas durante la reproducción.
+- Permite una reproducción continua aunque haya fluctuaciones en el ancho de banda.
+- Ideal para servicios como YouTube, Spotify o Netflix.
+
+---
+
+### 2. **Marcado de paquetes (DiffServ)**
+
+**Descripción:**  
+DiffServ (Differentiated Services) es una técnica que marca los paquetes en el encabezado IP con un valor (DSCP) que indica su prioridad. Los routers pueden tratar los paquetes multimedia con más prioridad que otros.
+
+**Cómo mejora la QoS:**
+- Prioriza el tráfico sensible al retardo (voz y video).
+- Minimiza el retardo, la pérdida de paquetes y el jitter.
+- Mejora el rendimiento de aplicaciones en tiempo real como videollamadas (Zoom, Skype).
+
+---
+
+### Conclusión
+
+Estas técnicas ayudan a mantener una experiencia de usuario fluida y estable al gestionar eficazmente los recursos de red:
+
+- **Buffering** actúa en el cliente para suavizar la entrega.
+- **DiffServ** actúa en la red para garantizar prioridad de tráfico crítico.
+
+## Pregunta 16: Best-Effort vs Servicios Multiclase
+
+---
+
+### Comparación entre Best-Effort y Servicios Multiclase
+
+| Característica                        | **Best-Effort**                                      | **Servicios Multiclase (QoS)**                          |
+|--------------------------------------|------------------------------------------------------|--------------------------------------------------------|
+| **Manejo del tráfico**               | Todos los paquetes se tratan por igual, sin prioridad | Clasificación y priorización según tipo de tráfico     |
+| **Garantía de calidad de servicio**  | No hay garantía de entrega, latencia o ancho de banda | Ofrece garantías (prioridad, retardo, pérdida, etc.)   |
+| **Control de congestión**            | No aplica mecanismos especializados                  | Se implementan colas y políticas de gestión            |
+| **Ejemplos de aplicaciones**         | Navegación web, correo electrónico                   | Videollamadas, streaming en vivo, VoIP                 |
+
+---
+
+### Explicación
+
+- **Best-Effort**: modelo simple y escalable, pero no adecuado para aplicaciones sensibles al tiempo.
+- **Servicios Multiclase (como DiffServ)**: permite adaptar la red para asegurar buen rendimiento a aplicaciones críticas, asignando diferentes clases de servicio.
+
+---
+
+### Ejemplos prácticos
+
+- **Best-Effort**:
+  - Navegar en un sitio web (HTTP).
+  - Descargar un archivo mediante FTP.
+
+- **Servicios Multiclase**:
+  - Videoconferencia (prioridad alta para evitar interrupciones).
+  - Tráfico de voz sobre IP (requiere baja latencia y pérdida).
+
+# Parte IV: Seguridad en redes 
+
+
