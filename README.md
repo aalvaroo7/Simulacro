@@ -181,3 +181,83 @@ El enrutamiento por inundación consiste en que cada nodo envía el paquete reci
 - **Subred base:** `172.18.170.0/23`
 - Rango de la subred: `172.18.170.0` a `172.18.171.255`
 - El host `172.18.171.190` **pertenece a la subred 172.18.170.0/23**
+
+  
+## Pregunta 5: Número de Subredes Necesarias
+
+### Fórmula para calcular el número de subredes:
+Nº de subredes
+=2^s
+
+Donde:
+- `s` es el número de **bits prestados** del campo de **host** para usarlos como parte del **identificador de subred**.
+
+---
+
+### ¿Cómo funciona?
+
+En una red con una máscara por defecto, podemos "tomar prestados" bits del campo de host para crear más subredes. Cada bit prestado **duplica** la cantidad de subredes posibles.
+
+---
+
+### Ejemplo: Necesitamos al menos 4 subredes
+
+1. Buscamos el valor mínimo de `s` tal que `2^s ≥ 4`.
+2. Probamos:
+
+   - `2^1 = 2` → insuficiente  
+   - `2^2 = 4` → suficiente  
+
+3. Por lo tanto, debemos **prestar 2 bits** al campo de subred.
+
+---
+
+### Resultado
+
+- Con **2 bits prestados**, podemos crear exactamente **4 subredes**.
+- Esto puede aplicarse, por ejemplo, a una red de clase C con máscara original `255.255.255.0 (/24)`:
+  - Si prestamos 2 bits → nueva máscara: `/26` (24 + 2)
+  - Subredes disponibles: `2^2 = 4`
+
+---
+
+### Subredes resultantes de un /26:
+
+| Subred         | Rango de Hosts         | Broadcast         |
+|----------------|------------------------|-------------------|
+| 192.168.1.0/26 | 192.168.1.1 - 62       | 192.168.1.63      |
+| 192.168.1.64/26| 192.168.1.65 - 126     | 192.168.1.127     |
+| 192.168.1.128/26| 192.168.1.129 - 190   | 192.168.1.191     |
+| 192.168.1.192/26| 192.168.1.193 - 254   | 192.168.1.255     |
+
+
+# Parte II: Capa de Transporte
+
+### Pregunta 6: Comparación entre TCP y UDP
+
+---
+
+### a) Comparación entre TCP y UDP
+
+| Característica                   | TCP (Transmission Control Protocol)     | UDP (User Datagram Protocol)         |
+|----------------------------------|------------------------------------------|--------------------------------------|
+| Establecimiento de conexión     | Sí (conexión orientada, requiere 3-way handshake) | No (sin conexión)                    |
+| Fiabilidad y control de errores | Alta: retransmisiones, verificación y acuse de recibo | Baja: no hay confirmaciones ni corrección de errores |
+| Control de flujo y congestión   | Sí (controla velocidad y congestión)     | No                                   |
+| Velocidad de transmisión        | Menor (más control, más sobrecarga)      | Mayor (menor sobrecarga)             |
+
+---
+
+### b) Aplicaciones donde se prefiere UDP
+
+1. **Streaming de video/audio (Ej. YouTube Live, videollamadas)**
+   - Se prioriza la **velocidad** sobre la fiabilidad.
+   - Algunos paquetes perdidos no afectan tanto como el retraso.
+
+2. **Juegos en línea (Ej. FPS, MMO)**
+   - Se necesita **respuesta rápida**.
+   - Retransmitir paquetes antiguos no tiene sentido en entornos en tiempo real.
+
+---
+
+UDP se elige cuando la **rapidez y baja latencia** son más importantes que la fiabilidad de la entrega.
