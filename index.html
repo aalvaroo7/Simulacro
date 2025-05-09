@@ -12,26 +12,22 @@
     <p><a href="https://github.com/aalvaroo7/Simulacro">Repositorio en GitHub</a></p>
   </header>
 
-  <main>
-    <!-- Aquí se incrusta el contenido del README -->
-    <section class="markdown-body">
-      <!-- Puedes pegar el contenido ya convertido a HTML aquí si lo deseas estáticamente. -->
-      <!-- O mejor aún: lo cargamos dinámicamente como se muestra abajo -->
-      <div id="contenido"></div>
-    </section>
-  </main>
+<main class="markdown-body">
+  <div id="contenido"></div>
+</main>
 
   <footer>
     <p>© 2025 - Simulacro de Redes</p>
   </footer>
 
-  <script>
-    // Cargar el README.md como texto y convertirlo con GitHub API o marked.js si fuera necesario
-    fetch("README.md")
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById("contenido").innerHTML = `<pre>${text}</pre>`;
-      });
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  fetch('README.md')
+    .then(response => response.text())
+    .then(markdown => {
+      document.getElementById('contenido').innerHTML = marked.parse(markdown);
+    });
+</script>
+
 </body>
 </html>
