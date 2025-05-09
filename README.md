@@ -3,7 +3,7 @@
 https://aalvaroo7.github.io/Simulacro/
 
 
-# Parte I: Capa de red
+## Parte I: Capa de red
 ## Pregunta 1
 
 ### a) Algoritmo de Dijkstra
@@ -232,7 +232,7 @@ En una red con una máscara por defecto, podemos "tomar prestados" bits del camp
 | 192.168.1.192/26| 192.168.1.193 - 254   | 192.168.1.255     |
 
 
-# Parte II: Capa de Transporte
+## Parte II: Capa de Transporte
 
 ### Pregunta 6: Comparación entre TCP y UDP
 
@@ -464,7 +464,7 @@ Reduce la fragmentación y previene el envío de datos ineficientes, mejorando e
 | Nagle         | Reducir tráfico de paquetes pequeños| Optimiza uso del ancho de banda               |
 | Clark         | Evitar envíos ineficientes          | Mejora rendimiento y reduce fragmentación     |
 
-# Parte III: Capa de Aplicación y Aplicaciones Multimedia
+## Parte III: Capa de Aplicación y Aplicaciones Multimedia
 
 ## Pregunta 11: Funcionamiento de DNS
 
@@ -724,7 +724,7 @@ Estas técnicas ayudan a mantener una experiencia de usuario fluida y estable al
   - Videoconferencia (prioridad alta para evitar interrupciones).
   - Tráfico de voz sobre IP (requiere baja latencia y pérdida).
 
-# Parte IV: Seguridad en redes 
+## Parte IV: Seguridad en redes 
 
 ## Pregunta 17: Problemas de Seguridad en Redes
 
