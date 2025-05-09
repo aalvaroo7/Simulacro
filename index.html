@@ -3,31 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simulacro - Capa de Red y Transporte</title>
+  <title>Simulacro de Redes</title>
   <link rel="stylesheet" href="styles.css" />
+  <!-- Librería marked.js para convertir Markdown a HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <header>
     <h1>Simulacro de Redes y Telecomunicaciones</h1>
-    <p><a href="https://github.com/aalvaroo7/Simulacro">Repositorio en GitHub</a></p>
+    <p><a href="https://github.com/aalvaroo7/Simulacro" target="_blank">Repositorio en GitHub</a></p>
   </header>
 
-<main class="markdown-body">
-  <div id="contenido"></div>
-</main>
+  <main class="markdown-body">
+    <div id="contenido">Cargando contenido...</div>
+  </main>
 
   <footer>
-    <p>© 2025 - Simulacro de Redes</p>
+    <p>&copy; 2025 - Simulacro de Redes</p>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-  fetch('README.md')
-    .then(response => response.text())
-    .then(markdown => {
-      document.getElementById('contenido').innerHTML = marked.parse(markdown);
-    });
-</script>
-
+  <script>
+    fetch("README.md")
+      .then(res => res.text())
+      .then(markdown => {
+        const html = marked.parse(markdown);
+        document.getElementById("contenido").innerHTML = html;
+      });
+  </script>
 </body>
 </html>
