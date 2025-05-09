@@ -37,10 +37,21 @@
   </footer>
 
  <script>
-    function mostrarParte(id) {
-      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+function mostrarParte(id) {
+  // Oculta todas las secciones
+  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+
+  // Muestra solo la parte seleccionada
+  document.getElementById(id).classList.add('active');
+
+  // Elimina el estilo activo de todos los botones
+  document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+
+  // Agrega el estilo activo al botón correspondiente
+  const activeButton = document.querySelector(`nav button[onclick*="${id}"]`);
+  if (activeButton) activeButton.classList.add('active');
+}
+
 
     fetch("README.md")
       .then(res => res.text())
