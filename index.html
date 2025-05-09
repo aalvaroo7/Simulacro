@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulacro - Capa de Red y Transporte</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Simulacro de Redes y Telecomunicaciones</h1>
+    <p><a href="https://github.com/aalvaroo7/Simulacro">Repositorio en GitHub</a></p>
+  </header>
+
+  <main>
+    <!-- Aquí se incrusta el contenido del README -->
+    <section class="markdown-body">
+      <!-- Puedes pegar el contenido ya convertido a HTML aquí si lo deseas estáticamente. -->
+      <!-- O mejor aún: lo cargamos dinámicamente como se muestra abajo -->
+      <div id="contenido"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 - Simulacro de Redes</p>
+  </footer>
+
+  <script>
+    // Cargar el README.md como texto y convertirlo con GitHub API o marked.js si fuera necesario
+    fetch("README.md")
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("contenido").innerHTML = `<pre>${text}</pre>`;
+      });
+  </script>
+</body>
+</html>
