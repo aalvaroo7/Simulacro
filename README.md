@@ -2,7 +2,8 @@
 
 https://github.com/aalvaroo7/Simulacro.git
 
-# Ejercicio 1
+# Parte I: Capa de red
+## Ejercicio 1
 
 ### a) Algoritmo de Dijkstra
 
@@ -66,7 +67,7 @@ El enrutamiento por inundación consiste en que cada nodo envía el paquete reci
 - Duplicación de paquetes.  
 - Riesgo de tormentas de red si no se controla con TTL o historial.
 
-# Ejercicio 2
+## Ejercicio 2
 
 ### a) Para la subred 172.29.152.0 con máscara 255.255.248.0, determina la dirección de broadcast.
 
