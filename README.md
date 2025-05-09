@@ -725,4 +725,261 @@ Estas técnicas ayudan a mantener una experiencia de usuario fluida y estable al
 
 # Parte IV: Seguridad en redes 
 
+## Pregunta 17: Problemas de Seguridad en Redes
+
+Las redes están expuestas a múltiples amenazas que afectan distintos aspectos de la seguridad. A continuación se explican las áreas críticas:
+
+---
+
+### 1. **Confidencialidad**
+
+**Definición:**  
+Garantiza que solo los usuarios autorizados puedan acceder a la información transmitida o almacenada.
+
+**Riesgo:**  
+Intercepción de datos por terceros (ej. sniffing).
+
+**Solución:**  
+- **Cifrado** (como TLS/SSL para tráfico web).
+- **VPNs** para proteger comunicaciones.
+
+---
+
+### 2. **Autenticación**
+
+**Definición:**  
+Verifica que la entidad (usuario o dispositivo) que accede a un sistema es quien dice ser.
+
+**Riesgo:**  
+Acceso no autorizado por suplantación de identidad.
+
+**Solución:**  
+- **Autenticación multifactor (MFA)**.
+- **Certificados digitales o credenciales seguras**.
+
+---
+
+### 3. **No repudio**
+
+**Definición:**  
+Impide que una parte niegue haber realizado una acción o envío de un mensaje.
+
+**Riesgo:**  
+Un usuario podría negar haber enviado información sensible o realizado una transacción.
+
+**Solución:**  
+- **Firmas digitales**, que garantizan la autoría y autenticidad del mensaje.
+
+---
+
+### 4. **Integridad**
+
+**Definición:**  
+Asegura que los datos no han sido alterados durante la transmisión o almacenamiento.
+
+**Riesgo:**  
+Modificación de mensajes por ataques como el "man-in-the-middle".
+
+**Solución:**  
+- **Hashing (ej. SHA-256)** para verificar contenido.
+- **Checksums y códigos de integridad (MAC)**.
+
+---
+
+### Resumen
+
+| Área             | Riesgo principal              | Solución común                     |
+|------------------|-------------------------------|------------------------------------|
+| Confidencialidad | Intercepción                  | Cifrado (TLS, VPN)                 |
+| Autenticación    | Suplantación de identidad     | Autenticación multifactor (MFA)    |
+| No repudio       | Negación de acciones          | Firmas digitales                   |
+| Integridad       | Alteración de los datos       | Hashes, MACs                       |
+
+## Pregunta 18: Cifrado Simétrico vs Asimétrico
+
+El cifrado es una técnica fundamental para proteger la información. Existen dos grandes categorías: simétrico y asimétrico.
+
+---
+
+### Comparación
+
+| Característica             | **Cifrado Simétrico**                              | **Cifrado Asimétrico**                                 |
+|---------------------------|----------------------------------------------------|--------------------------------------------------------|
+| **Número de claves**      | Usa una sola clave para cifrar y descifrar         | Usa dos claves: una pública y una privada              |
+| **Velocidad y eficiencia**| Muy rápido y eficiente en procesamiento             | Más lento, requiere mayor potencia computacional       |
+| **Seguridad de la clave** | Difícil distribución segura de la clave             | La clave pública puede compartirse libremente          |
+| **Ejemplos de algoritmos**| AES, DES, RC4, Blowfish                             | RSA, ECC, ElGamal                                      |
+| **Aplicaciones típicas**  | Cifrado de archivos, VPNs, comunicaciones en tiempo real | Intercambio de claves, firmas digitales, certificados |
+
+---
+
+### Resumen
+
+- **Simétrico**: ideal para cifrado rápido de grandes cantidades de datos, pero requiere un canal seguro para compartir la clave.
+- **Asimétrico**: ideal para autenticación, intercambio de claves y comunicaciones seguras sin compartir previamente una clave secreta.
+
+---
+
+### Uso combinado
+
+En muchas aplicaciones reales (como HTTPS), se utiliza cifrado **asimétrico para intercambiar una clave simétrica**, y luego se usa el cifrado **simétrico para cifrar los datos**, aprovechando lo mejor de ambos métodos.
+
+## Pregunta 19: Funcionamiento del Algoritmo RSA
+
+### a) Proceso de generación de claves en RSA
+
+1. **Elegir dos números primos**:  
+   Ejemplo:  
+   \( p = 3 \), \( q = 11 \)
+
+2. **Calcular \( n \)**:  
+   \( n = p \times q = 3 \times 11 = 33 \)
+
+3. **Calcular la función totiente \( \varphi(n) \)**:  
+   \( \varphi(n) = (p - 1)(q - 1) = (3 - 1)(11 - 1) = 2 \times 10 = 20 \)
+
+4. **Elegir un número \( e \)** tal que:  
+   - \( 1 < e < \varphi(n) \)
+   - \( e \) sea coprimo con \( \varphi(n) \) (es decir, \( \gcd(e, \varphi(n)) = 1 \))  
+   Ejemplo: \( e = 7 \) (válido ya que \( \gcd(7, 20) = 1 \))
+
+5. **Calcular \( d \)** tal que:  
+   \( d \equiv e^{-1} \mod \varphi(n) \)  
+   (es decir, \( d \times e \equiv 1 \mod 20 \))  
+   → \( d = 3 \) porque \( 7 \times 3 = 21 \equiv 1 \mod 20 \)
+
+6. **Claves resultantes**:
+   - Clave pública: \( (e = 7, n = 33) \)
+   - Clave privada: \( (d = 3, n = 33) \)
+
+---
+
+### b) Ejemplo de cifrado y descifrado
+
+**Mensaje original:**  
+\( M = 4 \)
+
+**Cifrado:**  
+\( C = M^e \mod n = 4^7 \mod 33 \)
+
+Paso a paso:
+- \( 4^2 = 16 \)
+- \( 4^4 = 256 \)
+- \( 4^7 = 4 \times 16 \times 256 = 16384 \)
+
+Ahora:
+- \( 4^7 \mod 33 = 16384 \mod 33 = 16 \)
+
+**Mensaje cifrado:**  
+\( C = 16 \)
+
+**Descifrado:**  
+\( M = C^d \mod n = 16^3 \mod 33 \)
+
+Paso a paso:
+- \( 16^2 = 256 \)
+- \( 16^3 = 16 \times 256 = 4096 \)
+- \( 4096 \mod 33 = 4 \)
+
+**Mensaje descifrado:**  
+\( M = 4 \) (Correcto)
+
+---
+
+### Conclusión
+
+El algoritmo RSA permite cifrar y descifrar información usando claves distintas (asimetría), asegurando privacidad y autenticación en comunicaciones digitales.
+
+## Pregunta 20: Firewalls, VPN e IPSec
+
+### a) Funcionamiento de un Firewall
+
+Un **firewall** es un sistema de seguridad que controla el tráfico de red entrante y saliente según reglas de seguridad predefinidas. Su función principal es **permitir o bloquear paquetes** basándose en criterios como dirección IP, puertos y protocolos.
+
+#### Tipos de firewalls:
+
+1. **Filtrado de paquetes (Packet Filtering):**
+   - Opera en la capa de red.
+   - Evalúa cada paquete de forma independiente según IP origen/destino, puertos y protocolo.
+   - Rápido pero sin contexto de conexiones previas.
+   - Ejemplo: ACLs en routers.
+
+2. **Firewall con inspección de estado (Stateful Inspection):**
+   - Opera en capas de red y transporte.
+   - Monitorea el estado de las conexiones activas.
+   - Decide en función del contexto de la conexión (por ejemplo, solo permite respuestas a conexiones iniciadas desde la red interna).
+   - Más seguro que el filtrado simple.
+
+### Importancia:
+- Protege la red de accesos no autorizados.
+- Permite aplicar políticas de seguridad granularmente.
+- Es esencial para segmentar redes y evitar la propagación de amenazas.
+
+---
+
+### b) Comparación entre VPN e IPSec
+
+| Característica          | VPN (Red Privada Virtual)              | IPSec (Internet Protocol Security)                |
+|------------------------|----------------------------------------|--------------------------------------------------|
+| **Propósito**           | Crear un túnel seguro sobre una red pública | Cifrar y autenticar datos a nivel de red IP       |
+| **Modo de operación**   | Usa protocolos como PPTP, L2TP, OpenVPN | Funciona en modo transporte o túnel con IPv4/IPv6 |
+| **Uso común**           | Acceso remoto de usuarios a redes corporativas | Comunicación segura entre routers/gateways       |
+| **Capa OSI**            | Capa 2 (L2TP), Capa 3 (OpenVPN, PPTP) | Capa 3 (red)                                     |
+| **Autenticación**       | Usuario/contraseña, certificados       | Certificados digitales, claves compartidas        |
+
+#### Ejemplos:
+- **VPN**: Un empleado accede desde casa a los servidores de su empresa.
+- **IPSec**: Dos sedes corporativas se comunican cifradamente mediante sus routers.
+
+---
+
+### Conclusión:
+Tanto firewalls como VPN/IPSec son componentes clave en la seguridad de redes modernas, cada uno cumpliendo funciones específicas: **control de tráfico**, **cifrado** y **acceso seguro**.
+
+## Pregunta 21: SSL/TLS y DNS Spoofing
+
+### a) Funcionamiento de SSL/TLS
+
+**SSL (Secure Sockets Layer)** y su sucesor **TLS (Transport Layer Security)** son protocolos criptográficos que garantizan la **seguridad de las comunicaciones** en redes como Internet.
+
+#### Funciones clave:
+- **Cifrado**: Protege la confidencialidad de los datos.
+- **Autenticación**: Verifica la identidad del servidor (y a veces del cliente) mediante certificados digitales.
+- **Integridad**: Asegura que los datos no han sido alterados durante la transmisión.
+
+#### Proceso resumido (Handshake TLS):
+1. El cliente solicita conexión segura al servidor (por ejemplo, https://...).
+2. El servidor envía su **certificado digital** (emitido por una Autoridad de Certificación).
+3. El cliente lo verifica y negocian una **clave de sesión** para cifrar los datos.
+4. Se establece el canal seguro y comienza la transmisión cifrada.
+
+> **Importancia**: Es la base de **HTTPS**, protegiendo contraseñas, datos personales y transacciones financieras frente a interceptaciones.
+
+---
+
+### b) DNS Spoofing y DNSSEC
+
+#### ¿Qué es el DNS Spoofing?
+
+Es un ataque en el que un atacante **suplanta respuestas del sistema DNS** para redirigir al usuario hacia un sitio malicioso en lugar del legítimo.
+
+- Por ejemplo, el atacante hace que `www.banco.com` resuelva a una IP falsa donde simula el sitio del banco.
+- Esto permite **robo de credenciales**, instalación de malware, etc.
+
+#### ¿Cómo ayuda DNSSEC?
+
+**DNSSEC (DNS Security Extensions)** añade **firmas digitales** a las respuestas DNS, lo que permite:
+
+- Verificar que la respuesta **proviene de una fuente legítima**.
+- Detectar si la respuesta ha sido **modificada o falsificada**.
+
+> DNSSEC no cifra las respuestas, pero garantiza su **autenticidad e integridad**, lo cual **mitiga ataques de spoofing**.
+
+---
+
+### Conclusión:
+
+- **SSL/TLS** protege las comunicaciones web (HTTPS).
+- **DNSSEC** protege la integridad del sistema DNS.
+- Ambos son fundamentales para una experiencia de Internet segura.
 
