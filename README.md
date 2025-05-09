@@ -3,7 +3,7 @@
 https://github.com/aalvaroo7/Simulacro.git
 
 # Parte I: Capa de red
-## Ejercicio 1
+## Pregunta 1
 
 ### a) Algoritmo de Dijkstra
 
@@ -67,7 +67,7 @@ El enrutamiento por inundación consiste en que cada nodo envía el paquete reci
 - Duplicación de paquetes.  
 - Riesgo de tormentas de red si no se controla con TTL o historial.
 
-## Ejercicio 2
+## Pregunta 2
 
 ### a) Para la subred 172.29.152.0 con máscara 255.255.248.0, determina la dirección de broadcast.
 
@@ -261,3 +261,116 @@ En una red con una máscara por defecto, podemos "tomar prestados" bits del camp
 ---
 
 UDP se elige cuando la **rapidez y baja latencia** son más importantes que la fiabilidad de la entrega.
+
+## Pregunta 7: Establecimiento y Terminación de Conexión en TCP
+
+### Establecimiento de Conexión: Three-Way Handshake
+
+El proceso de conexión en TCP se realiza en tres pasos, conocidos como **Three-Way Handshake**, para garantizar que ambos extremos están listos para la comunicación:
+
+1. **SYN (Synchronize)**  
+   - El cliente envía un segmento con el bit `SYN` activado e incluye un número de secuencia inicial (ISN).  
+   - Indica que el cliente desea iniciar una conexión.
+
+2. **SYN-ACK (Synchronize + Acknowledge)**  
+   - El servidor responde con un segmento que tiene los bits `SYN` y `ACK` activados.  
+   - Acepta la solicitud del cliente y envía su propio número de secuencia.
+
+3. **ACK (Acknowledge)**  
+   - El cliente responde con un segmento con el bit `ACK` activado.  
+   - Confirma que recibió correctamente la respuesta del servidor.
+
+ **Conexión establecida**: a partir de aquí, los datos pueden intercambiarse de manera confiable.
+
+---
+
+### Terminación de Conexión: Four-Way Handshake
+
+La terminación de una conexión TCP se hace en cuatro pasos para cerrar la conexión de forma ordenada en ambos sentidos:
+
+1. **FIN (Finish) - desde el cliente**  
+   - El cliente indica que ha terminado de enviar datos y quiere cerrar la conexión.
+
+2. **ACK - desde el servidor**  
+   - El servidor reconoce la solicitud del cliente.
+
+3. **FIN - desde el servidor**  
+   - El servidor también indica que ha terminado de enviar datos.
+
+4. **ACK - desde el cliente**  
+   - El cliente confirma la finalización de la conexión.
+
+ **Conexión cerrada**: ambas partes han acordado terminar la comunicación.
+
+---
+
+### Importancia de cada proceso
+
+- **Three-Way Handshake** asegura que ambas partes acuerdan los parámetros de comunicación y están listas para intercambiar datos.
+- **Four-Way Handshake** garantiza que cada extremo cierre la conexión de forma independiente, evitando la pérdida de datos.
+
+## Pregunta 8: Multiplexación y Demultiplexación en la Capa de Transporte
+
+### ¿Qué es la Multiplexación?
+
+La **multiplexación** es el proceso mediante el cual múltiples aplicaciones pueden compartir una misma conexión de red a través de un protocolo de transporte (como TCP o UDP).  
+Se utilizan **puertos** para distinguir las diferentes comunicaciones.
+
+---
+
+### Multiplexación Ascendente
+
+- **Definición:**  
+  Proceso por el cual varios procesos de distintas aplicaciones en el **host origen** envían datos a través de una única conexión de red hacia el destino.
+
+- **Ejemplo práctico:**  
+  En un equipo, el navegador web (puerto 50000), un cliente de correo (puerto 50001) y un cliente FTP (puerto 50002) se comunican simultáneamente con distintos servicios externos por Internet, todos usando la misma dirección IP del host origen.
+
+---
+
+### Multiplexación Descendente (Demultiplexación)
+
+- **Definición:**  
+  Proceso por el cual el **host destino** recibe segmentos TCP/UDP y los dirige al proceso de aplicación correcto basándose en el **número de puerto de destino**.
+
+- **Ejemplo práctico:**  
+  Un servidor con IP pública recibe múltiples conexiones entrantes:
+  - Las peticiones HTTP (puerto 80) se envían al servidor web.
+  - Las peticiones SSH (puerto 22) se envían al servidor SSH.
+  - Las peticiones DNS (puerto 53) se envían al servicio DNS.
+
+---
+
+### Resumen
+
+| Tipo                  | ¿Dónde ocurre?         | Función principal                                       |
+|-----------------------|------------------------|---------------------------------------------------------|
+| Multiplexación ascendente | En el host origen        | Identifica el proceso que envía datos salientes         |
+| Multiplexación descendente | En el host destino       | Entrega los datos entrantes al proceso correcto         |
+
+# Pregunta 9: Cálculo del Tamaño de Ventana en TCP
+
+### Datos proporcionados:
+
+- RTT (Tiempo de ida y vuelta) = **50 ms**
+- Ancho de banda = **100 Mbps**
+- MSS (Tamaño máximo de segmento) = **1,500 bytes**
+
+---
+
+### Paso 1: Convertir unidades
+
+- RTT = 50 ms = **0.05 segundos**
+- Ancho de banda = 100 Mbps = **100 × 10⁶ bits/segundo**
+
+---
+
+### Paso 2: Calcular el tamaño óptimo de la ventana
+
+**Fórmula:**
+Ventana 
+óptima
+=
+Ancho de banda
+×
+RTT
