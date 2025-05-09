@@ -106,3 +106,78 @@ El enrutamiento por inundación consiste en que cada nodo envía el paquete reci
 ####  Dirección de Broadcast:
 - **172.18.27.255**
 
+## Pregunta 3: Última Dirección Válida y Rango de Hosts
+
+### a) Subred: 172.30.67.192 / Máscara: 255.255.255.192
+
+#### Paso 1: Convertir la máscara
+- 255.255.255.192 → en binario: `11111111.11111111.11111111.11000000` → **/26**
+- 26 bits de red → 6 bits para hosts → `2^6 = 64` direcciones por subred
+
+#### Paso 2: Calcular el rango de la subred
+- Subred comienza en `172.30.67.192`
+- Tamaño del bloque: 64 direcciones
+- Broadcast: `192 + 63 = 255` → `172.30.67.255`
+
+#### Paso 3: Última dirección de host válida
+- Broadcast: `172.30.67.255`
+- Último host válido: **`172.30.67.254`**
+
+---
+
+### b) Host: 172.22.53.199 / Máscara: 255.255.252.0
+
+#### Paso 1: Convertir la máscara
+- 255.255.252.0 → en binario: `11111111.11111111.11111100.00000000` → **/22**
+- 22 bits de red → 10 bits para hosts → `2^10 = 1024` direcciones por subred
+
+#### Paso 2: Determinar a qué subred pertenece
+- Tercer octeto del host: 53
+- Subred de /22 cambia cada 4 en el tercer octeto (porque 256 - 252 = 4)
+- 53 pertenece al rango de subred que comienza en **52**
+
+#### Paso 3: Calcular el rango
+- Primera IP de la subred: `172.22.52.0`
+- Última IP: `172.22.55.255`
+- Rango de hosts válidos:
+  - Primera: `172.22.52.1`
+  - Última: `172.22.55.254`
+
+####  Resultado:
+- **Rango de direcciones válidas:**  
+  **172.22.52.1** a **172.22.55.254**
+
+## Pregunta 4: Capacidad y Segmentación de Subredes
+
+### a) ¿Cuántos hosts pueden conectarse en la red 172.26.0.0 con máscara 255.255.255.192?
+
+#### Paso 1: Analizar la máscara
+- Máscara: 255.255.255.192 → en binario: `11111111.11111111.11111111.11000000` → **/26**
+- Bits de host: 32 - 26 = 6
+- Total de direcciones: `2^6 = 64`
+- Resta 2 direcciones reservadas:
+  - Dirección de red
+  - Dirección de broadcast
+
+####  Resultado:
+- **Número de hosts útiles:** `64 - 2 = 62`
+
+---
+
+### b) Host: 172.18.171.190/23 → ¿A qué subred pertenece?
+
+#### Paso 1: Interpretar la notación CIDR
+- Prefijo /23 → Máscara: 255.255.254.0
+- Abarca bloques de 512 direcciones (`2^9`), agrupando dos subredes de clase C
+
+#### Paso 2: Calcular el bloque correspondiente
+- Dirección: 172.18.171.190
+- El tercer octeto es 171
+- Como 254 → salta de 2 en 2 (256 - 254 = 2), el bloque al que pertenece es el que empieza en el múltiplo de 2 más cercano hacia abajo:
+
+  - `171 ÷ 2 = 85` → `85 × 2 = 170`
+
+#### Resultado:
+- **Subred base:** `172.18.170.0/23`
+- Rango de la subred: `172.18.170.0` a `172.18.171.255`
+- El host `172.18.171.190` **pertenece a la subred 172.18.170.0/23**
