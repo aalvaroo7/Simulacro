@@ -1,8 +1,6 @@
-https://aalvaroo7.github.io/Simulacro/index.html
 
 # Simulacro
-
-https://github.com/aalvaroo7/Simulacro.git
+https://aalvaroo7.github.io/Simulacro/index.html
 
 # Parte I: Capa de red
 ## Pregunta 1
