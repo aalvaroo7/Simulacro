@@ -1,4 +1,4 @@
-https://aalvaroo7.github.io/Simulacro/index.html
+https://aalvaroo7.github.io/Simulacro/
 
 # Simulacro
 
