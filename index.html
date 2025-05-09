@@ -22,13 +22,13 @@
     <p>&copy; 2025 - Simulacro de Redes</p>
   </footer>
 
-  <script>
-    fetch("README.md")
-      .then(res => res.text())
-      .then(markdown => {
-        const html = marked.parse(markdown);
-        document.getElementById("contenido").innerHTML = html;
-      });
-  </script>
+<script>
+  fetch("README.md")
+    .then(res => res.text())
+    .then(markdown => {
+      const html = marked.parse(markdown);
+      document.getElementById("contenido").innerHTML = html;
+    });
+</script>
 </body>
 </html>
