@@ -374,3 +374,33 @@ Ventana
 Ancho de banda
 ×
 RTT
+
+
+**Sustituyendo valores:**
+
+Ventana óptima = 100,000,000 bits/s × 0.05 s = 5,000,000 bits
+
+Convertimos a **bytes**:
+5,000,000 bits ÷ 8 = 625,000 bytes
+
+---
+
+### Paso 3: Calcular número de segmentos MSS
+Número de MSS = Ventana óptima en bytes ÷ MSS
+Número de MSS = 625,000 ÷ 1,500 ≈ 416.67
+---
+
+###  Resultado Final
+
+- **Tamaño óptimo de ventana:**  
+  - **5,000,000 bits**  
+  - **625,000 bytes**
+
+- **Número aproximado de segmentos MSS en tránsito:**  
+  - **417 segmentos**
+
+---
+
+### Interpretación
+
+Para aprovechar completamente el enlace de 100 Mbps con un RTT de 50 ms, el tamaño de ventana TCP debería ser de **625,000 bytes**, permitiendo que unos **417 segmentos MSS** estén en tránsito al mismo tiempo.
