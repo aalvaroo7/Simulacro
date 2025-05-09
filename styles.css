@@ -1,0 +1,85 @@
+/* styles.css */
+
+/* Tipografía general */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fbfc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Encabezado principal */
+header {
+  background-color: #004080;
+  color: #fff;
+  padding: 1rem 2rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/* Contenedor principal */
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Títulos */
+h2, h3 {
+  color: #004080;
+}
+
+/* Tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+th {
+  background-color: #e0e7f1;
+  color: #000;
+}
+
+/* Cajas de ejemplo o nota */
+.note {
+  background-color: #f0f8ff;
+  border-left: 5px solid #007acc;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 5px;
+}
+
+/* Enlaces */
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 3rem;
+  padding: 1rem;
+}
